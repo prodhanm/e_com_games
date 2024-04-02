@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "e-com-store-mod"
+version = "0.1.0"
+description = "e_commerce store model"
+authors = ["prodhanm <mustafizur.prodhan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.3"
+python-dotenv = "^1.0.1"
+pillow = "^10.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
