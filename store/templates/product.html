@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Product Page{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row mt-5">
+            <div class="col-10 mx-auto col-md-6 my-3">
+                <img src="{% static 'media/ps5_cod_IIIjpg.jpg' %}" 
+                    style="height: 45%" alt="Call of Duty III">
+            </div>
+            <div class="col-10 mx-auto col-md-6 my-3">
+                <div>
+                    <h1 class="product_title">
+                        Call of Duty III
+                    </h1>
+                    <p class="text-info font-italic mb-3">
+                        <span class="mr-1">$</span> 59.99
+                    </p>
+                    <p class="product_description">
+                        Product Description:
+                    </p>
+                    <p class="text-justify product_text">
+                        Lorem ipsum dolor sit amet consectetur, 
+                        adipisicing elit. In possimus ipsa cupiditate 
+                        id debitis? Voluptate laudantium impedit dolor, 
+                        enim distinctio ipsam pariatur sunt. Culpa impedit 
+                        blanditiis asperiores officia odit sed?
+                    </p>
+                    <p class="text-justify product_text">
+                        <b>Out of Stock</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
