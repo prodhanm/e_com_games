@@ -20,4 +20,4 @@ def product(request, category_slug, product_slug):
     return render(request, 'product.html', {'product': product})
 # Create your views here.
 def cart(request):
-    return HttpResponse('<h1>This is cart page</h1>')
+    return render(request, 'cart.html')
