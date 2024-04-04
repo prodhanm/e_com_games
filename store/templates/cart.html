@@ -14,8 +14,8 @@
     </div>
     <div class="row mx-auto">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-            <table class="table">
-                <thead>
+            <table class="table cart_table">
+                <thead class="cart_thead">
                     <tr>
                         <th colspan="4">
                             Your Items
@@ -42,16 +42,17 @@
                             $59.99
                         </td>
                         <td>
-                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-plus-circle"></i></a>
-                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-minus-circle"></i></a>
-                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-trash-alt"></i></a>
+                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-plus-circle cart_icon"></i></a>
+                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-minus-circle cart_icon"></i></a>
+                            &nbsp;<a href=""><i class="fa-sharp fa-solid fa-trash-alt cart_icon"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
         </div>
     </table>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-            <thead>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <table class="table cart">
+            <thead class="cart_thead">
                 <tr>
                     <th>
                         Check Out
@@ -80,5 +81,6 @@
             </a>
         </div>
         </div>
+    </table>
     </div>
 {% endblock %}
