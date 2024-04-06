@@ -29,7 +29,11 @@
                             <b>Out of Stock</b>
                         </p>
                     {% else %}
-                        <a href="">Add to Cart</a>
+                        <a href="{% url 'add_cart' product.id %}">
+                            <button>
+                                Add to Cart
+                            </button>
+                        </a>
                     {% endif %}
                 </div>
             </div>
