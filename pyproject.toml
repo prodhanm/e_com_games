@@ -11,6 +11,7 @@ python = "^3.12"
 django = "^5.0.3"
 python-dotenv = "^1.0.1"
 pillow = "^10.3.0"
+stripe = "^8.10.0"
 
 
 [build-system]
