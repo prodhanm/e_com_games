@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Category, Product, Cart, CartItem
+import stripe
+from django.conf import settings
+import pdb
 
 def home(request, category_slug=None):
     category_page = None
@@ -63,10 +66,43 @@ def cart(request, total=0, quantity=0, cart_items=None):
             quantity += cart_item.quantity
     except ObjectDoesNotExist as e:
         print(e)
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    stripe_total = int(total * 100)
+    description = 'evoGames - Payment for Order'
+    data_key = settings.STRIPE_PUBLISHABLE_KEY
+    if request.method == 'POST':
+        print(request.POST)
+        try:
+            token = request.POST['stripeToken']
+            email = request.POST['stripeEmail']
+            name = request.POST['stripeBillingName']
+            address = request.POST['stripeBillingAddressLine1']
+            city = request.POST['stripeBillingAddressCity']
+            postcode = request.POST['stripeBillingAddressZip']
+            customer = stripe.Customer.create(
+                email=email,
+                source=token
+            )
+            charge = stripe.Charge.create(
+                amount=stripe_total,
+                currency='usd',
+                description=description,
+                customer=customer.id
+            )
+        except stripe.error.CardError as e:
+            return False, e
     return render(
         request, 
         'cart.html', 
-        dict(cart_items=cart_items, total=total, quantity=quantity)
+        dict(
+            cart_items=cart_items, 
+            total=total, 
+            quantity=quantity, 
+            stripe_total=stripe_total, 
+            description=description, 
+            data_key=data_key, 
+            )
         )
 
 def remove_cart(request, product_id):
