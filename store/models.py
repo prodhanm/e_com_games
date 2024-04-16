@@ -71,7 +71,7 @@ class CartItem(models.Model):
 class Order(models.Model):
     token = models.CharField(max_length=250, blank=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='USD Order Total')
-    email = models.EmailField(max_length=250, blank=True, verbose_name='Email')
+    emailAddress = models.EmailField(max_length=250, blank=True, verbose_name='Email Address')
     created = models.DateTimeField(auto_now=True)
     billingName = models.CharField(max_length=250, blank=True)
     billingAddress1 = models.CharField(max_length=250, blank=True)
