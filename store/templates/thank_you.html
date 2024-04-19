@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Thank You Page{% endblock %}
+
+{% block content %}
+
+    <div class="text-center">
+        <br>
+        <br>
+        <h1 class="text-center product_title">
+            Thank You for Your Purchase!
+        </h1>
+        <br>
+        <br>
+        <p>Your order number is: <b>{{ customer_order.id}}</b> </p>
+        <br>
+        <p>
+            A confirmation email was sent to <b>{{ customer_order.email }}</b>
+            We will be working on your order shortly to expedite shipping.
+        </p>
+    </div>
+
+{% endblock %}
