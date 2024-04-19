@@ -13,5 +13,6 @@ urlpatterns = [
     path('account/created/', views.signupView, name='signup'),
     path('account/signin/', views.signinView, name='signin'),
     path('account/signout/', views.signoutView, name='signout'),
-    path('order_history/', views.order_history, name='order_history')
+    path('order_history/', views.order_history, name='order_history'),
+    path('view_order/<int:order_id>/', views.view_order, name='view_order'),
 ]
