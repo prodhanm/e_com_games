@@ -9,6 +9,9 @@ from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+
 
 def home(request, category_slug=None):
     category_page = None
@@ -132,6 +135,13 @@ def cart(request, total=0, quantity=0, cart_items=None):
                     product.save()
                     order_item.delete()
                     print('The order has been created')
+
+                # Call the sendEmail function
+                try:
+                    sendEmail(order_details.id)
+                    print('The order email has been sent')
+                except IOError as e:
+                    return e
                 return redirect('thanks_page', order_details.id)
             except ObjectDoesNotExist as e:
                 print(e)
@@ -226,3 +236,21 @@ def view_order(request, order_id):
 def search(request):
     products = Product.objects.filter(name__contains=request.GET['name'])
     return render(request, 'home.html', {'products': products})
+
+def sendEmail(order_id):
+    transaction = Order.objects.get(id=order_id)
+    order_items = OrderItem.objects.filter(order=transaction)
+    try:
+        subject = "evoGames - New Order #{}".format(transaction.id)
+        to = ['{}'.format(transaction.emailAddress)]
+        from_email = "evogames2024@gmail.com"
+        order_information = {
+            'transaction': transaction,
+            'order_items': order_items
+        }
+        message = get_template('email/email.html').render(order_information)
+        msg = EmailMessage(subject, message, to=to, from_email=from_email)
+        msg.content_subtype = 'html'
+        msg.send()
+    except IOError as e:
+        return e
