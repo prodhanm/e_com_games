@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Category, Product, Cart, CartItem, Order, OrderItem
+from .models import Category, Product, Cart, CartItem, Order, OrderItem, Review
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import Group, User
@@ -28,12 +28,17 @@ def product(request, category_slug, product_slug):
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
     except Exception as e:
         raise e
-    return render(request, 'product.html', {'product': product})
-# Create your views here.
-'''
-def cart(request):
-    return render(request, 'cart.html')
-'''
+    if request.method == 'POST' and request.user.is_authenticated and request.POST.get('content').strip != '':
+        review = Review.objects.create(
+            product=product,
+            user=request.user,
+            content=request.POST.get('content')
+        )
+        reviews = Review.objects.filter(product=product)
+        review.save()
+
+    return render(request, 'product.html', {'product': product, 'reviews': reviews})
+
 def _cart_id(request):
     cart = request.session.session_key
     if not cart:
