@@ -5,7 +5,7 @@ from .models import Category, Product, Cart, CartItem, Order, OrderItem
 import stripe
 from django.conf import settings
 from django.contrib.auth.models import Group, User
-from .forms import SignUpForm
+from .forms import SignUpForm, ContactForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -254,3 +254,28 @@ def sendEmail(order_id):
         msg.send()
     except IOError as e:
         return e
+    
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            from_email = form.cleaned_data.get('from_email')
+            name = form.cleaned_data.get('name')
+            message = form.cleaned_data.get('message')
+            
+            message_format = f'{name} has sent you a new message:\n\n{message}'
+
+            msg = EmailMessage(
+                subject,
+                message_format,
+                to=['evogames2024@gmail.com'],
+                from_email=from_email,
+            )
+            
+            msg.send()
+
+            return render(request, 'contact_success.html')
+    else:
+        form = ContactForm()
+    return render(request, 'contact.html', {'form': form})
