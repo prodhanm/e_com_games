@@ -28,14 +28,12 @@ def product(request, category_slug, product_slug):
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
     except Exception as e:
         raise e
-    if request.method == 'POST' and request.user.is_authenticated and request.POST.get('content').strip != '':
-        review = Review.objects.create(
-            product=product,
-            user=request.user,
-            content=request.POST.get('content')
-        )
-        reviews = Review.objects.filter(product=product)
-        review.save()
+    if request.method == 'POST' and request.user.is_authenticated and request.POST['content'].strip() != '':
+        Review.objects.create(product=product,
+                              user=request.user,
+                              content=request.POST['content'])
+    reviews = Review.objects.filter(product=product)
+    #reviews.save()
 
     return render(request, 'product.html', {'product': product, 'reviews': reviews})
 
